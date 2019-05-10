@@ -28,6 +28,21 @@ Task("Clean")
     CleanDirectories(directories);
 });
 
+Task("Restore-NuGet-Packages")
+    .IsDependentOn("Clean")
+    .Does(() =>
+{
+    NuGetRestore(solutionFile);
+});
+
+Task("Build")
+    .IsDependentOn("Restore-NuGet-Packages")
+    .Does(() =>
+{
+    MSBuild( solutionFile, settings => 
+        settings.SetConfiguration(configuration));
+});
+
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
 //////////////////////////////////////////////////////////////////////
