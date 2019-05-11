@@ -56,6 +56,7 @@ Task("Build")
 
     DotNetCorePublish(solutionFile, publishSettings);
 
+    EnsureDirectoryExists("./artifacts");
     Zip("./publish/win-x64", "./artifacts/appveyor.topshelf.service.zip");
 });
 
