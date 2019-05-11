@@ -29,19 +29,37 @@ Task("Clean")
 });
 
 Task("Restore-NuGet-Packages")
-    .IsDependentOn("Clean")
     .Does(() =>
 {
-    NuGetRestore(solutionFile);
+    DotNetCoreRestore(solutionFile);
 });
 
 Task("Build")
     .IsDependentOn("Restore-NuGet-Packages")
     .Does(() =>
 {
-    MSBuild( solutionFile, settings => 
-        settings.SetConfiguration(configuration));
+    var settings = new DotNetCoreBuildSettings
+    {
+        NoRestore = true,
+        Configuration = configuration
+    };
+
+    DotNetCoreBuild(solutionFile, settings);
+
+    var publishSettings = new DotNetCorePublishSettings
+    {         
+         Configuration = configuration,
+         OutputDirectory = "./publish/win-x64",
+         Runtime = "win-x64"
+    };
+
+    DotNetCorePublish(solutionFile, publishSettings);
 });
+
+Task("Rebuild")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore-NuGet-Packages")
+    .IsDependentOn("Build");
 
 //////////////////////////////////////////////////////////////////////
 // TASK TARGETS
