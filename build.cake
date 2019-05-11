@@ -48,12 +48,15 @@ Task("Build")
 
     var publishSettings = new DotNetCorePublishSettings
     {         
+        NoRestore = true,
          Configuration = configuration,
          OutputDirectory = "./publish/win-x64",
          Runtime = "win-x64"
     };
 
     DotNetCorePublish(solutionFile, publishSettings);
+
+    Zip("./publish/win-x64", "./artifacts/appveyor.topshelf.service.zip");
 });
 
 Task("Rebuild")
