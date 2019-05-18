@@ -9,15 +9,13 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
-name: $(Version.MajorMinor).$(Rev:.r)
+name: $(Version.MajorMinor)$(Rev:.r)
 
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'  
-  Version.MajorMinor: 1.0
-  Version.Revision: $[counter(variables['Version.MajorMinor'], 0)]
-  Build.BuildNumber: $[counter(variables['Version.MajorMinor'], 0)]
+  Version.MajorMinor: 1.0.0
 
 steps:
 
