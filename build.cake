@@ -11,7 +11,7 @@ var verbosity = Argument<string>("verbosity", "Minimal");
 
 // Define directories.
 var solutionDir = Directory("./");
-var solutionFile = solutionDir + File("./AppVeyor.Topshelf.Service/AppVeyor.Topshelf.Service.sln");
+var solutionFile = solutionDir + File("./Topshelf.Service.sln");
 
 
 //////////////////////////////////////////////////////////////////////
@@ -45,19 +45,6 @@ Task("Build")
     };
 
     DotNetCoreBuild(solutionFile, settings);
-
-    var publishSettings = new DotNetCorePublishSettings
-    {         
-        NoRestore = true,
-         Configuration = configuration,
-         OutputDirectory = "./publish/win-x64",
-         Runtime = "win-x64"
-    };
-
-    DotNetCorePublish(solutionFile, publishSettings);
-
-    EnsureDirectoryExists("./artifacts");
-    Zip("./publish/win-x64", "./artifacts/appveyor.topshelf.service.zip");
 });
 
 Task("Rebuild")
