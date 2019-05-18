@@ -9,6 +9,8 @@ trigger:
 pool:
   vmImage: 'windows-latest'
 
+name: $(Version.MajorMinor).$(Rev:.r)
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
