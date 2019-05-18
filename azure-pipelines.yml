@@ -22,3 +22,10 @@ steps:
     target: 'Default'
     verbosity: 'Verbose'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    feedsToUse: 'select'
+    packagesToPack: '**/*.csproj'
+    versioningScheme: 'byBuildNumber'
+    includeSymbols: true
