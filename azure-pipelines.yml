@@ -41,6 +41,6 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'template-topshelf-service-win-$(name)'
+    ArtifactName: 'template-topshelf-service-win-$(Version.MajorMinor).($Rev)'
     publishLocation: 'Container'
 
