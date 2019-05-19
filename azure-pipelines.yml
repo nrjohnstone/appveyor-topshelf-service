@@ -16,7 +16,7 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'  
   Version.MajorMinor: 1.0.0
-  BuildVersion: $(Version.MajorMinor)$(Rev:.r)
+  BuildVersion: $(Version.MajorMinor)
 
 steps:
 
@@ -41,6 +41,6 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'template-topshelf-service-win-$(Version.MajorMinor).($env:BUILD_BUILDNUMBER)'
+    ArtifactName: 'template-topshelf-service-win-$(Build.BuildNumber)'
     publishLocation: 'Container'
 
