@@ -28,9 +28,11 @@ steps:
 
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'pack'
+    command: 'publish'
+    publishWebProjects: false
+    projects: '**/*.csproj'
+    arguments: '-c Release -r win10-x64'
     feedsToUse: 'select'
-    packagesToPack: '**/*.csproj'
     versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
