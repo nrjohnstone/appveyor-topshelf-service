@@ -32,14 +32,14 @@ steps:
     publishWebProjects: false
     zipAfterPublish: true
     projects: '**/*.csproj'
-    arguments: '-c Release -r win10-x64 -o ./publish'
+    arguments: '-c Release -r win10-x64 -o $(Build.ArtifactStagingDirectory)'
     feedsToUse: 'select'
     versioningScheme: 'byBuildNumber'
     modifyOutputPath: false
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: './src/Topshelf.Service/publish/'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
