@@ -30,14 +30,15 @@ steps:
   inputs:
     command: 'publish'
     publishWebProjects: false
+    zipAfterPublish: true
     projects: '**/*.csproj'
-    arguments: '-c Release -r win10-x64'
+    arguments: '-c Release -r win10-x64 -o ./publish'
     feedsToUse: 'select'
     versioningScheme: 'byBuildNumber'
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    PathtoPublish: './publish'
     ArtifactName: 'drop'
     publishLocation: 'Container'
 
