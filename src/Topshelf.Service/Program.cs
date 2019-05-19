@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Timers;
+using Serilog;
 using Topshelf;
 
 namespace AppVeyor.Topshelf.Service
@@ -8,6 +9,8 @@ namespace AppVeyor.Topshelf.Service
     {
         static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration().WriteTo.File("logfile.txt").CreateLogger();
+
             var rc = HostFactory.Run(x =>                                  
             {
                 x.Service<TownCrier>(s =>                                 
@@ -34,7 +37,12 @@ namespace AppVeyor.Topshelf.Service
         public TownCrier()
         {
             _timer = new Timer(1000) { AutoReset = true };
-            _timer.Elapsed += (sender, eventArgs) => Console.WriteLine("It is {0} and all is well", DateTime.Now);
+            _timer.Elapsed += (sender, eventArgs) =>
+            {
+                var message = $"It is {DateTime.Now} and all is well";
+                Log.Information(message);
+                Console.WriteLine(message);
+            };
         }
         public void Start() { _timer.Start(); }
         public void Stop() { _timer.Stop(); }
